@@ -12,10 +12,11 @@ __pycache__/
 *.py[cod]
 *$py.class
 .ipynb_checkpoints/
+
 # Mac OS files
 .DS_Store
 
-# Weights, Data, and Output
+# Weights, Data, and Output files (too large for Git)
 resources/
 notebooks_backup/
 *.pth
@@ -25,8 +26,13 @@ notebooks_backup/
 *.pdf
 *.zip
 *.tar.gz
+*.gz
 
-# Chainlit
+# Generated output files
+instruction-data-with-response.json
+*-with-response.json
+
+# Chainlit runtime files
 .chainlit/
 .files/
 

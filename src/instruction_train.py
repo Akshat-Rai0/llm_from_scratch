@@ -33,14 +33,14 @@ from tqdm import tqdm
 # ------------------------------------------------------------------
 # Local modules (same package)
 # ------------------------------------------------------------------
-from src.instruction_data import (
+from .instruction_data import (
     download_and_load_file,
     format_input,
     create_instruction_dataloaders,
 )
-from src.architecture import GPTModel
-from src.generate import generate, text_to_token_ids, token_ids_to_text
-from src.train import calc_loss_loader, train_model_simple
+from .architecture import GPTModel
+from .generate import generate, text_to_token_ids, token_ids_to_text
+from .train import calc_loss_loader, train_model_simple
 
 
 # ------------------------------------------------------------------

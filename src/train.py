@@ -1,5 +1,5 @@
 import torch
-from src.generate import generate, token_ids_to_text, text_to_token_ids
+from .generate import generate, token_ids_to_text, text_to_token_ids
 
 def calc_loss_batch(input_batch, target_batch, model, device):
     input_batch, target_batch = input_batch.to(device), target_batch.to(device)

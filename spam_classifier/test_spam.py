@@ -6,7 +6,7 @@ import os
 # Adjust path to import from parent directory
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from architecture import GPTModel
+from src.architecture import GPTModel
 from spam_classifier.classifier import classify_review
 
 def main():

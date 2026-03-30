@@ -3,8 +3,8 @@ import chainlit as cl
 import torch
 import tiktoken
 import os
-from architecture import GPTModel
-from generate import generate, text_to_token_ids, token_ids_to_text
+from src.architecture import GPTModel
+from src.generate import generate, text_to_token_ids, token_ids_to_text
 
 # Configuration for GPT-2 Small
 GPT_CONFIG_124M = {
