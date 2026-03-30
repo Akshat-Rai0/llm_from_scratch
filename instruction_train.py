@@ -25,6 +25,7 @@ import json
 import time
 import argparse
 
+import numpy as np
 import torch
 import tiktoken
 from tqdm import tqdm
@@ -117,14 +118,15 @@ def _load_weights_into_gpt(gpt: GPTModel, params: dict):
     gpt.tok_emb.weight = torch.nn.Parameter(torch.tensor(params["wte"]))
 
     for b in range(len(gpt.trf_blocks)):
-        q, k, v = torch.split(
-            torch.tensor(params["blocks"][b]["attn"]["c_attn"]["w"]).T,
-            gpt.trf_blocks[b].att.W_query.weight.shape[0],
-            dim=0,
+        q_w, k_w, v_w = np.split(
+            params["blocks"][b]["attn"]["c_attn"]["w"], 3, axis=-1
         )
-        gpt.trf_blocks[b].att.W_query.weight = torch.nn.Parameter(q)
-        gpt.trf_blocks[b].att.W_key.weight   = torch.nn.Parameter(k)
-        gpt.trf_blocks[b].att.W_value.weight = torch.nn.Parameter(v)
+        gpt.trf_blocks[b].att.W_query.weight = torch.nn.Parameter(
+            torch.tensor(q_w).T)
+        gpt.trf_blocks[b].att.W_key.weight   = torch.nn.Parameter(
+            torch.tensor(k_w).T)
+        gpt.trf_blocks[b].att.W_value.weight = torch.nn.Parameter(
+            torch.tensor(v_w).T)
 
         q_bias, k_bias, v_bias = torch.split(
             torch.tensor(params["blocks"][b]["attn"]["c_attn"]["b"]),

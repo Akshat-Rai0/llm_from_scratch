@@ -10,11 +10,13 @@ from architecture import GPTModel
 from spam_classifier.classifier import classify_review
 
 def main():
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    if torch.backends.mps.is_available():
+    if torch.cuda.is_available():
+        device = torch.device("cuda")
+    elif torch.backends.mps.is_available():
         major, minor = map(int, torch.__version__.split(".")[:2])
-        if (major, minor) >= (2, 9):
-            device = torch.device("mps")
+        device = torch.device("mps") if (major, minor) >= (2, 9) else torch.device("cpu")
+    else:
+        device = torch.device("cpu")
 
     # The original spam classifier was trained with GPT2-small
     BASE_CONFIG = {

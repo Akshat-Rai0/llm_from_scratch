@@ -1,3 +1,4 @@
+import asyncio
 import chainlit as cl
 import torch
 import tiktoken
@@ -69,8 +70,10 @@ async def main(message: cl.Message):
     await msg.send()
 
     try:
-        # We process this synchronously here 
-        token_ids = generate(
+        # Offload the CPU/GPU-bound generate() call to a thread pool
+        # so it does not block the async event loop
+        token_ids = await asyncio.to_thread(
+            generate,
             model=model,
             idx=encoded,
             max_new_tokens=50,
